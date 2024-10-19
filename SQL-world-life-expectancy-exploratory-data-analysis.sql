@@ -262,8 +262,7 @@ WHERE `HIV/AIDS` =  ( SELECT MIN(`HIV/AIDS`) FROM life_expectancy_staging )
 GROUP BY Country;
 
 -- THINNESS 1-19 YEARS EXPLORATION
---
---
+-- This query shows the country with the highest rate of thinness
 SELECT Country, MAX(`Thinness 1-19 years`) AS `Thinness 1-19 years`
 FROM (
 	SELECT Country, `Thinness 1-19 years`
@@ -271,9 +270,79 @@ FROM (
 WHERE `Thinness 1-19 years` =  ( SELECT MAX(`Thinness 1-19 years`) FROM life_expectancy_staging )
 GROUP BY Country;
 
+-- This query shows the country with the lowest rate of thinness
 SELECT Country, MIN(`Thinness 1-19 years`) AS `Thinness 1-19 years`
 FROM (
 	SELECT Country, `Thinness 1-19 years`
 	FROM life_expectancy_staging) AS Thiness_per_country 
 WHERE `Thinness 1-19 years` =  ( SELECT MIN(`Thinness 1-19 years`) FROM life_expectancy_staging )
 GROUP BY Country;
+
+/* BIVARIATE ANALYSIS: This analysis consist in finding relations between two variables */
+
+-- LIFE EXPECTANCY VS STATUS
+-- This query calculates the average life expectancy and based on their developing status
+SELECT `Status`, ROUND(AVG(`Life expectancy`), 1) AS `Life Expectancy`
+FROM life_expectancy_staging
+GROUP BY `Status`;
+
+-- LIFE EXPECTANCY VS ADULT DEATH MORTALITY
+-- This query retrieves the average life expectancy and average adult mortality for each country
+SELECT Country , ROUND(AVG(`Life expectancy`), 1) AS `Life Expectancy`, ROUND(AVG(`Adult Mortality`)) AS `Adult Mortality`
+FROM life_expectancy_staging
+GROUP BY Country
+ORDER BY `Adult Mortality` DESC;
+
+-- Rolling total of adult mortality for each country
+-- This query computes the rolling total of adult mortality over the years for each country, providing a cumulative view of adult mortality trends
+SELECT Country, `Year`, `Life expectancy`, `Adult Mortality`, SUM(`Adult Mortality`)
+	OVER (PARTITION BY Country ORDER BY YEAR) AS Rolling_Total 
+FROM life_expectancy_staging;
+
+-- LIFE EXPECTANCY VS EXPENDITURE
+-- This query retrieves the average life expectancy and average percentage expenditure for each country
+SELECT Country , ROUND(AVG(`Life expectancy`), 1) AS `Life Expectancy`, ROUND(AVG(`Percentage expenditure`)) AS `Expenditure`
+FROM life_expectancy_staging
+GROUP BY Country
+HAVING `Expenditure` > 0
+ORDER BY `Expenditure` DESC;
+
+-- LIFE EXPECTANCY VS GDP
+-- This query fetches the average life expectancy and average GDP for each country excluding records with zero values
+SELECT Country,  ROUND(AVG(`Life expectancy`), 1) AS `Life Expectancy`, ROUND(AVG(GDP), 1) AS GDP
+FROM life_expectancy_staging
+GROUP BY Country
+HAVING GDP > 0 
+ORDER BY GDP ASC;
+
+-- LIFE EXPECTANCY VS BMI
+-- This query selects the average life expectancy and average BMI for each country, excluding data with zero values
+SELECT Country,  ROUND(AVG(`Life expectancy`), 1) AS `Life Expectancy`, ROUND(AVG(BMI), 1) AS BMI
+FROM life_expectancy_staging
+GROUP BY Country
+HAVING BMI > 0
+ORDER BY BMI ASC;
+
+-- LIFE EXPECTANCY VS MEASLES
+-- This query obtains the average life expectancy and average measles rate for each country
+SELECT Country, ROUND(AVG(`Life expectancy`), 1 ) AS `Life Expectancy`, ROUND(AVG(`Measles`), 1) AS `Measles Cases`
+FROM life_expectancy_staging
+GROUP BY Country
+HAVING `Measles Cases` <> 0
+ORDER BY `Measles Cases` DESC;
+
+-- LIFE EXPECTANCY VS HIV DEATHS
+-- This query retrieves the average life expectancy and average HIV/AIDS deaths for each country
+SELECT Country, ROUND(AVG(`Life expectancy`), 1) AS `Life Expectancy`, ROUND(AVG(`HIV/AIDS`), 1) AS `HIV/AIDS Deaths`
+FROM life_expectancy_staging
+GROUP BY Country
+HAVING `HIV/AIDS Deaths` > 0
+ORDER BY `HIV/AIDS Deaths` DESC;
+
+-- LIFE EXPECTANCY vs POLIO AND DIPHTHERIA VACCIONATION RATES
+-- This query fetches average life expectancy and average inmunization against polio and diphtheria for each country 
+SELECT Country, ROUND(AVG(`Life expectancy`), 1) AS `Life Expectancy`, ROUND(AVG(`Polio`), 1) AS `Polio Vacc. Rate`, ROUND(AVG(`Diphtheria`), 1) AS `Diphteria Vacc. Rate`
+FROM life_expectancy_staging
+GROUP BY Country
+HAVING `Polio Vacc. Rate` > 0 AND `Diphteria Vacc. Rate` > 0
+ORDER BY `Polio Vacc. Rate` DESC;

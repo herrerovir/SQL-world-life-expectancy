@@ -177,8 +177,8 @@ In this study was observed that the higher the GDP of a country, its life expect
 | Country         | Life expectancy | GDP             |
 | --------------- | --------------- | ----------------|
 | Switzerland     | 82.3            | 57363.1         |
-| Luxembour       | 80.8            | 53257.1         |
-| Qater           | 77.0            | 40748.6         |
+| Luxembourg      | 80.8            | 53257.1         |
+| Qatar           | 77.0            | 40748.6         |
 | Netherlands     | 81.1            | 34964.8         |
 | Australia       | 81.8            | 34637.6         |
 

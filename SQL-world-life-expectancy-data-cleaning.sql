@@ -180,3 +180,24 @@ WHERE t1.`Status` = ""
 AND t2.`Status` <> ""
 AND t2.`Status` = "Developed";
 
+-- BMI Value
+-- This query retrieves all the unique BMI values in the dataset
+SELECT DISTINCT BMI
+FROM life_expectancy_staging
+ORDER BY BMI DESC;
+
+/* These value are quite strange, since all the values are extremely high. Meaning there are many countries with its population extremely obese. */
+
+SELECT Country, BMI
+FROM life_expectancy_staging
+WHERE Country = "Spain"
+ORDER BY BMI DESC;
+
+/* The BMI for Spain in this dataset is really high with one value that is really low.
+   By consulting wide and different source, this information seems to be wrong, therefore I will delete the whole column.
+*/ 
+
+-- DROP BMI COLUMN
+ALTER TABLE life_expectancy_staging
+DROP COLUMN BMI;
+

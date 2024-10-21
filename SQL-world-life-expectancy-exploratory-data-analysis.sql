@@ -148,45 +148,6 @@ GROUP BY Country
 ORDER BY 2 DESC
 LIMIT 5;
 
--- BMI EXPLORATION
--- Highest BMI
--- This query retrieves all information for the highest BMI in the dataset
-SELECT Country, `Year`, `Status`, `Life expectancy`, BMI
-FROM life_expectancy_staging
-WHERE BMI =  ( SELECT MAX(BMI) FROM life_expectancy_staging );
-/* The highest BMI obtained is extremely high
-   BMI values above 35 indicate extreme obesity
-*/
-
--- BMI in Kiribati, the countri with highest BMI
-/* Let's have a look at all the value for Kiribati
-   All values are surprisingly high
-*/
-SELECT BMI, `Life expectancy`
-FROM life_expectancy_staging
-WHERE Country = "Kiribati"
-ORDER BY 1 DESC;
-
--- BMI in countries with highest life expectancy 
--- This query select all contries with highest life expectancy and 
-SELECT Country, BMI, `Life expectancy`
-FROM life_expectancy_staging
-WHERE `Life Expectancy` =  ( SELECT MAX(`Life Expectancy`) FROM life_expectancy_staging )
-ORDER BY Country ASC;
-
-/* The BMI values are unusually high for all the countries with high life expectancies
-   Values above 35 BMI are considered extremely obese
-   Portugal has an average BMI of its population very low (6.9)
-   These unusual values indicates that something might be wrong with this column
-*/
-
--- BMI in the country with lowest life expectancy
--- This query select all contries with highest life expectancy and 
-SELECT Country, BMI, `Life expectancy`
-FROM life_expectancy_staging
-WHERE `life expectancy` =  ( SELECT MIN(`life expectancy`) FROM life_expectancy_staging )
-ORDER BY Country ASC;
-
 -- UNDER FIVE DEATHS EXPLORATION
 -- Top 5 countries with highest under-five death rates
 -- This query selects the top 5 countries with the highest under-five death rate
@@ -314,14 +275,6 @@ FROM life_expectancy_staging
 GROUP BY Country
 HAVING GDP > 0 
 ORDER BY GDP ASC;
-
--- LIFE EXPECTANCY VS BMI
--- This query selects the average life expectancy and average BMI for each country, excluding data with zero values
-SELECT Country,  ROUND(AVG(`Life expectancy`), 1) AS `Life Expectancy`, ROUND(AVG(BMI), 1) AS BMI
-FROM life_expectancy_staging
-GROUP BY Country
-HAVING BMI > 0
-ORDER BY BMI ASC;
 
 -- LIFE EXPECTANCY VS MEASLES
 -- This query obtains the average life expectancy and average measles rate for each country

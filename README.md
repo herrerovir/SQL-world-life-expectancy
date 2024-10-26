@@ -101,7 +101,7 @@ The highest life expectancy in the dataset is 89 years old. 10 developed countri
 
 * **Relationship between the state of development of the country and life expectancy**
 
-During the study of the posible correlation between developing status and life expectancy, it was found that life expectancy is higher in countries in developing countries, whereas it decreases in countries which are in developing status. This means there is a positive relationship between the developed status of the country and life expectancy.
+During the study of the posible correlation between developing status and life expectancy, it was found that life expectancy is higher in countries in developed countries, whereas it decreases in countries which are in developing status. This means there is a positive relationship between the developed status of the country and life expectancy.
 
 <small> Table 1. Average life expectancy for developed and developing countries </small>
 
@@ -136,7 +136,7 @@ In the bivariate study between adult mortality and life expectancy it was seen t
 
 * **Relationship between healthcare expenditure and life expectancy**
 
-Through the SQL query that retrieves the life expectancy, healthcare expenditure for each country, it was observed that the higher the health expenditure, the higher the life expectancy. Thus, there is a positive relationship between life expectancy and healthcare expenditure. 
+Through the SQL query that retrieves the life expectancy and healthcare expenditure for each country, it was observed that the higher the health expenditure, the higher the life expectancy. Thus, there is a positive relationship between life expectancy and healthcare expenditure. 
 
 <small> Table 4. Top 5 countries with the average highest healthcare expenditure </small>
 
@@ -160,7 +160,7 @@ Through the SQL query that retrieves the life expectancy, healthcare expenditure
 
 * **Relationship between GDP and life expectancy**
 
-In this study was observed that the higher the GDP of a country, its life expectancy increases. Consequently, a positive relationship exists between life expectancy and GP. 
+In this study was observed that the higher the GDP of a country, its life expectancy increases. Consequently, a positive relationship exists between life expectancy and GDP. 
 
 <small> Table 6. Top 5 countries with the average lowest GDP </small>
 
